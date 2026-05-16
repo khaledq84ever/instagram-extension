@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "InstaGet Downloader",
   "description": "Download videos, Reels, and images from Instagram — powered by sunny-creation-production-05bc.up.railway.app",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "action": {
     "default_popup": "src/popup.html",
     "default_title": "InstaGet Downloader"

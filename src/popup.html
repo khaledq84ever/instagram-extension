@@ -1,11 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>InstaGet</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles/popup.css" />
 </head>
 <body>
@@ -13,8 +14,8 @@
 
     <header class="header">
       <div class="brand">
-        <div class="brand-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="2" width="20" height="20" rx="5"/>
             <circle cx="12" cy="12" r="4"/>
             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
@@ -22,28 +23,66 @@
         </div>
         <span class="brand-name">InstaGet</span>
       </div>
-      <span class="version-badge">v1.0</span>
+      <div class="header-actions">
+        <span class="version-badge" aria-label="Version 1.2.0">v1.2</span>
+        <button id="settingsBtn" class="icon-btn" aria-label="Open settings" aria-expanded="false" aria-controls="settingsDrawer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+      </div>
     </header>
 
-    <p class="hint">Download buttons appear automatically on every post and Reel while you browse <strong>Instagram</strong>.</p>
+    <section id="settingsDrawer" class="settings-drawer" hidden aria-label="Settings">
+      <div class="setting-row">
+        <label class="toggle" for="setInPage">
+          <span class="setting-label">In-page download buttons</span>
+          <input type="checkbox" id="setInPage" checked />
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="setting-row setting-row-stack">
+        <label for="setFilename" class="setting-label">Filename template</label>
+        <input id="setFilename" class="setting-input" type="text" placeholder="{uploader}_{title}" />
+      </div>
+      <div class="setting-row setting-row-stack">
+        <label for="setQuality" class="setting-label">Default action</label>
+        <select id="setQuality" class="setting-select">
+          <option value="video">Video (MP4)</option>
+          <option value="mp3">Audio (MP3)</option>
+        </select>
+      </div>
+    </section>
 
-    <div class="divider"><span>or paste an Instagram URL</span></div>
-
-    <div class="input-wrap">
-      <svg class="input-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-      <input id="urlInput" type="url" placeholder="https://instagram.com/p/…  or  /reel/…" autocomplete="off" spellcheck="false" />
+    <div class="hint-card">
+      <div class="hint-head">
+        <span id="apiPing" class="status-dot" data-state="checking" role="img" aria-label="API status"></span>
+        <span class="hint-title">How it works</span>
+        <span id="apiPingLabel" class="hint-status-label">Checking…</span>
+      </div>
+      <p class="hint-body">Download buttons appear automatically on every post and Reel while you browse <strong>Instagram</strong>.</p>
     </div>
 
-    <div id="errorBox" class="error-box" style="display:none"></div>
+    <div class="divider"><span>or paste a URL</span></div>
 
-    <button id="fetchBtn" class="fetch-btn">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      Get Post
+    <div class="input-wrap">
+      <svg class="input-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <input id="urlInput" type="url" placeholder=" " autocomplete="off" spellcheck="false" aria-label="Instagram URL" />
+      <label for="urlInput" class="floating-label">Instagram URL</label>
+      <button id="pasteBtn" class="paste-btn" aria-label="Paste from clipboard" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+      </button>
+    </div>
+
+    <div id="errorBox" class="error-box" role="alert" hidden></div>
+
+    <button id="fetchBtn" class="fetch-btn" aria-label="Fetch and download post">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span class="btn-label">Get Post</span>
     </button>
 
-    <div id="resultCard" class="result-card" style="display:none">
-      <div class="result-thumb-row">
-        <div class="result-info">
+    <div id="resultCard" class="result-card" hidden role="region" aria-label="Result">
+      <div class="result-head">
+        <div id="resultThumb" class="result-thumb" aria-hidden="true"><div class="thumb-shimmer"></div></div>
+        <div class="result-meta-col">
           <div id="resultTitle" class="result-title"></div>
           <div id="resultMeta" class="result-meta"></div>
         </div>
@@ -51,18 +90,25 @@
       <div id="actionRow" class="action-row"></div>
     </div>
 
-    <div id="progressWrap" class="progress-wrap" style="display:none">
+    <div id="progressWrap" class="progress-wrap" hidden role="status" aria-live="polite">
       <div class="progress-track">
         <div id="progressBar" class="progress-fill"></div>
       </div>
       <div id="progressLabel" class="progress-label">Starting…</div>
     </div>
 
+    <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="false"></div>
+
     <footer class="footer">
-      <span class="footer-credit">
-        Programmed By
-        <a href="https://x.com/KhaledQ84Ever" target="_blank" rel="noopener noreferrer" class="footer-link">@KhaledQ84Ever</a>
-      </span>
+      <a href="https://x.com/KhaledQ84Ever" target="_blank" rel="noopener noreferrer" class="footer-card" aria-label="Creator on X: KhaledQ84Ever">
+        <span class="footer-mark" aria-hidden="true">◆</span>
+        <span class="footer-text">
+          <span class="footer-line">Programmed By</span>
+          <span class="footer-handle">@KhaledQ84Ever</span>
+        </span>
+        <svg class="footer-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+      </a>
+      <span class="footer-sub">made with <span class="heart" aria-hidden="true">♥</span> in Kuwait</span>
     </footer>
 
   </div>
