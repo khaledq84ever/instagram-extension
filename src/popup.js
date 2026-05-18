@@ -249,12 +249,19 @@ async function fetchInfo() {
     const PLAY_SVG  = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"/></svg>`;
     const IMG_SVG   = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
     resultMeta.innerHTML = '';
-    if (data.uploader)  resultMeta.innerHTML += `<span class="meta-chip">${USER_SVG} ${data.uploader}</span>`;
-    if (data.is_video)  resultMeta.innerHTML += `<span class="meta-chip">${PLAY_SVG} Video</span>`;
-    else                resultMeta.innerHTML += `<span class="meta-chip">${IMG_SVG} Image</span>`;
+    const makeChip = (svg, text) => {
+      const span = document.createElement('span');
+      span.className = 'meta-chip';
+      span.innerHTML = svg + ' ';
+      span.appendChild(document.createTextNode(text));
+      return span;
+    };
+    if (data.uploader)  resultMeta.appendChild(makeChip(USER_SVG, data.uploader));
+    if (data.is_video)  resultMeta.appendChild(makeChip(PLAY_SVG, 'Video'));
+    else                resultMeta.appendChild(makeChip(IMG_SVG, 'Image'));
 
-    if (data.thumbnail) {
-      resultThumb.style.backgroundImage = `url("${data.thumbnail}")`;
+    if (data.thumbnail && /^https:\/\//.test(data.thumbnail)) {
+      resultThumb.style.backgroundImage = `url("${data.thumbnail.replace(/"/g, '%22')}")`;
       resultThumb.classList.add('has-img');
     } else {
       resultThumb.style.backgroundImage = '';
