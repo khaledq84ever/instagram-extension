@@ -15,6 +15,16 @@
 
 ---
 
+## 🌐 Website
+
+No extension needed — use it straight from the browser:
+
+**https://sunny-creation-production-05bc.up.railway.app**
+
+Paste any Instagram link → download videos, Reels, and images.
+
+Get this extension (and its siblings for YouTube, Twitter, Instagram, TikTok) from the download hub: **https://getpack-production.up.railway.app**
+
 ## Features
 
 - **Auto download buttons** on every post and Reel while you browse Instagram
