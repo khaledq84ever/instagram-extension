@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "InstaGet Downloader",
   "description": "Download videos, Reels, and images from Instagram — fast, clean, no ads.",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "action": {
     "default_popup": "src/popup.html",
     "default_title": "InstaGet Downloader"
