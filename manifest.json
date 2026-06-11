@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "InstaGet Downloader",
   "description": "Download videos, Reels, and images from Instagram — fast, clean, no ads.",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "action": {
     "default_popup": "src/popup.html",
     "default_title": "InstaGet Downloader"
@@ -28,9 +28,16 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.instagram.com/*", "https://instagram.com/*"],
-      "js": ["src/content.js"],
-      "css": ["src/styles/inject.css"],
+      "matches": [
+        "https://www.instagram.com/*",
+        "https://instagram.com/*"
+      ],
+      "js": [
+        "src/content.js"
+      ],
+      "css": [
+        "src/styles/inject.css"
+      ],
       "run_at": "document_idle"
     }
   ],
